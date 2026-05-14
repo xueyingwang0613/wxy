@@ -1,0 +1,4 @@
+interface:
+  display_name: "WXY"
+  short_description: "Personal greeting and check-in helper"
+  default_prompt: "Use $wxy to start a quick personal check-in."
