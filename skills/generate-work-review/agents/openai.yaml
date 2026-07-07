@@ -1,0 +1,4 @@
+interface:
+  display_name: "生成任务观察员"
+  short_description: "读取本地 Codex 会话并生成工作复盘网页版"
+  default_prompt: "使用 $generate-work-review 生成我的 Codex 工作复盘网页版。"
