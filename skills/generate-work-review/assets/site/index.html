@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Codex 任务观察员｜本地工作复盘" />
+  <title>任务观察员</title>
+  <link rel="stylesheet" href="./styles.css?v=manual-refresh-1" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#daily"><span class="brand-mark">观</span><span><b id="observer-brand">我的任务观察员</b><small>AI WORK REVIEW</small></span></a>
+    <nav class="view-tabs" aria-label="复盘维度"><button class="tab is-active" data-view="daily">每日</button><button class="tab" data-view="weekly">每周</button><button class="tab" data-view="projects">项目</button></nav>
+    <div class="header-actions">
+      <span class="header-status"><i></i> 数据可信度：中</span>
+      <button class="refresh-button" id="refresh-data" type="button"><span aria-hidden="true">↻</span> 手动更新</button>
+      <small class="refresh-status" id="refresh-status" role="status" aria-live="polite"></small>
+    </div>
+  </header>
+
+  <main>
+    <section class="view is-active" id="daily" data-view-panel="daily">
+      <div class="hero-grid">
+        <div><p class="eyebrow">DAILY REVIEW / 每日总结</p><h1>这段时间，<br /><em>全部拉出来算账。</em></h1><p class="hero-copy" id="hero-range">正在读取本地 Codex 主会话记录。</p></div>
+        <div class="verdict-card"><span>本期数据原则</span><strong>只看记录<br />不补故事</strong><p>投入来自 transcript；成果与闭环需要结合文件、发布和验收证据判断。</p></div>
+      </div>
+
+      <div class="metrics four overview-metrics">
+        <div class="metric"><small>总处理 TOKEN</small><strong id="overview-total">—</strong><span>含大量缓存上下文</span></div>
+        <div class="metric accent"><small>有效新增规模</small><strong id="overview-effective">22.81M</strong><span>非缓存输入 + 输出</span></div>
+        <div class="metric"><small>用户消息</small><strong id="overview-messages">—</strong><span id="overview-sessions">— 个主会话</span></div>
+        <div class="metric danger"><small>活跃天数</small><strong id="overview-active">—</strong><span id="overview-days">— 个自然日内</span></div>
+      </div>
+
+      <div class="archive-head"><div><p class="eyebrow">DATE ARCHIVE</p><h2>按日期查看真实工作</h2></div><div class="month-toggle"></div></div>
+      <div class="calendar-shell"><div class="calendar-grid" id="calendar"></div><aside class="day-detail" id="day-detail" aria-live="polite"></aside></div>
+      <p class="data-caption">统计至 <span id="data-caption-date">—</span>；没有 token 记录的字段保持为 0，不做猜测。</p>
+      <section class="trace-detail" id="trace-detail" aria-live="polite"></section>
+    </section>
+
+    <section class="view" id="weekly" data-view-panel="weekly">
+      <div class="weekly-hero"><div><span>WEEKLY REVIEW / 周诊断</span><h1><span id="weekly-period-count">六个周期，</span><br />别拿忙碌冒充进展。</h1><p>7 天为一周期；最后一周统计至 <span id="weekly-cutoff">07.07</span></p></div><aside><small>本周监工判词</small><strong id="weekly-hero-verdict">做得不少，闭环太少。</strong><p id="weekly-hero-note">投入只有变成可验证成果，才算工作价值。</p></aside></div>
+      <section class="weekly-ops" id="weekly-ops" aria-label="本周六维指标"></section>
+      <div class="weekly-index-head"><div><span>WEEK INDEX / 诊断索引</span><h2>选择一周，接受审讯。</h2></div><p>数值来自自动统计；成果、闭环、返工与风险来自复盘标注。</p></div>
+      <section class="grade-guide" aria-label="周评分等级说明"><header><span>评分等级</span><p>评价工作价值，不评价忙碌程度。</p></header><div><b>A</b><span>高价值成果已闭环，可发布或复用</span></div><div><b>B</b><span>有明确成果，但闭环或复用不完整</span></div><div><b>C</b><span>投入明显，返工偏高，外部结果偏弱</span></div><div><b>D</b><span>缺少可验证成果，任务明显失控</span></div><footer><b>＋ / −</b><span>“＋”接近上一级，“−”接近下一级</span></footer></section>
+      <div class="week-grid" id="week-grid"></div>
+      <section class="week-analysis" id="week-analysis" aria-live="polite"></section>
+      <section class="panel weekly-chart-panel"><div class="panel-title"><h3>每周 Token 消耗对比</h3><span>总处理 / 有效新增</span></div><div class="week-chart" id="week-chart"></div><div class="chart-key"><span><i class="key-total"></i>总处理 token</span><span><i class="key-effective"></i>非缓存输入 + 输出</span></div></section>
+    </section>
+
+    <section class="view" id="projects" data-view-panel="projects">
+      <div class="section-heading top"><div><span>PROJECT REVIEW / 项目总结</span><h1>按工作流归类，<br />逐个看投入。</h1></div><p>基于会话关键词自动归类；不是人工工时台账</p></div>
+      <div class="project-summary"><div><strong id="project-session-count">—</strong><span>主会话</span></div><div><strong>—</strong><span>项目 / 工作流类别</span></div><div><strong id="project-total">—</strong><span>总处理 token</span></div></div>
+      <div class="project-filter" id="project-filter"></div>
+      <article class="project-dynamic" id="project-detail"></article>
+      <section class="classification-note"><b>归类口径</b><p>每个主会话只进入一个类别，分类用于管理复盘，不代表精确成本核算。</p></section>
+    </section>
+  </main>
+
+  <footer><span id="footer-source">DATA SOURCE · LOCAL CODEX SESSIONS</span><span id="footer-updated">LOCAL ONLY</span></footer>
+  <script src="./generated-data.js?v=manual-refresh-1"></script>
+  <script src="./app.js?v=manual-refresh-1"></script>
+</body>
+</html>
